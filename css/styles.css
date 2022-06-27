@@ -48,7 +48,7 @@ section > div > div {
     text-align: center;
 }
 
-section > div > div > button {
+#play-again-btn {
     margin-top: 5vmin;
 }
 
@@ -62,6 +62,7 @@ article {
 button {
     font-size: 3vmin;
     font-family: 'Roboto', sans-serif;
+    cursor: pointer;
 }
 
 article > button {
