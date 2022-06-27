@@ -28,9 +28,12 @@ const guessEl = document.getElementById('guess');
 const spacemanImg = document.querySelector('img');
 const letterBtns = [...document.querySelectorAll("article > button")]
 const msgEl = document.querySelector("h2")
+
 /*----- event listeners -----*/
 document.querySelector('article')
     .addEventListener('click', handleLetterClick);
+
+replayBtn.addEventListener("click", init);
 
 /*----- functions -----*/
 init();
@@ -62,7 +65,7 @@ function renderMessage() {
     } else if (gameStatus === "L") {
         msgEl.textContent = "lost in space";
     } else {
-        msgEl.textContent = `you have ${} left`;
+        msgEl.textContent = `you have ${MAX_WRONG_GUESSES - wrongGuesses.length + 1} left - good luck!`;
         
     }
 }
