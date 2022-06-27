@@ -21,12 +21,13 @@ let secret;  // Array of the chars for the randomly selected word
 let guess;  // Array of current guessed letters
 let gameStatus;  // null -> game in progress; 'W' -> won; 'L' -> lost
 
+
 /*----- cached element references -----*/
 const replayBtn = document.getElementById('play-again-btn');
 const guessEl = document.getElementById('guess');
 const spacemanImg = document.querySelector('img');
 const letterBtns = [...document.querySelectorAll("article > button")]
-
+const msgEl = document.querySelector("h2")
 /*----- event listeners -----*/
 document.querySelector('article')
     .addEventListener('click', handleLetterClick);
@@ -46,13 +47,24 @@ function init() {
 }
 
 function render() {
-    // render the message
+    renderMessage();
     // render the spaceman
     spacemanImg.src = `images/spaceman-${wrongGuesses.length}.jpeg`;
     // render the guess
     guessEl.textContent = guess.join('');
     // render the buttons
     renderButtons();
+}
+
+function renderMessage() {
+    if ( gameStatus === "W" ) {
+        msgEl.textContent = "you win";
+    } else if (gameStatus === "L") {
+        msgEl.textContent = "lost in space";
+    } else {
+        msgEl.textContent = `you have ${} left`;
+        
+    }
 }
 
 function renderButtons() {
@@ -88,6 +100,12 @@ function handleLetterClick(evt) {
         //wrong guess
         wrongGuesses.push(ltr);
     }
+    gameStatus = getGameStatus();
     render();
+}
 
+function getGameStatus() {
+    if(!guess.includes("_")) return "W";
+    if(wrongGuesses.length > MAX_WRONG_GUESSES) return "L";
+    return null;
 }
