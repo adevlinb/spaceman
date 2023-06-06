@@ -30,9 +30,7 @@ const letterBtns = [...document.querySelectorAll("article > button")]
 const msgEl = document.querySelector("h2")
 
 /*----- event listeners -----*/
-document.querySelector('article')
-    .addEventListener('click', handleLetterClick);
-
+document.querySelector('article').addEventListener('click', handleLetterClick);
 replayBtn.addEventListener("click", init);
 
 /*----- functions -----*/
@@ -42,44 +40,30 @@ function init() {
     wrongGuesses = [];
     const rndIdx = Math.floor(Math.random() * WORDS.length);
     secret = WORDS[rndIdx].toUpperCase().split('');
-    // map always returns a NEW array of the same # of elements
     guess = secret.map(ltr => ltr === ' ' ? ' ' : '_');
     gameStatus = null;
-    console.log("hello", secret)
     render();
 }
 
 function render() {
     renderMessage();
-    // render the spaceman
-    spacemanImg.src = `images/spaceman-${wrongGuesses.length}.jpeg`;
-    // render the guess
+    spacemanImg.src = `images/spaceman-${wrongGuesses.length}.png`;
     guessEl.textContent = guess.join('');
-    // render the buttons
     renderButtons();
 }
 
 function renderMessage() {
-    if ( gameStatus === "W" ) {
-        msgEl.textContent = "you win";
-    } else if (gameStatus === "L") {
-        msgEl.textContent = "lost in space";
-    } else {
-        msgEl.textContent = `you have ${MAX_WRONG_GUESSES - wrongGuesses.length + 1} left - good luck!`;
-        
-    }
+    if ( gameStatus === "W" ) msgEl.textContent = "you win";
+    else if (gameStatus === "L") msgEl.textContent = "lost in space";
+    else msgEl.textContent = `you have ${MAX_WRONG_GUESSES - wrongGuesses.length + 1} left - good luck!`;
 }
 
 function renderButtons() {
     letterBtns.forEach(function(btn) {
         ltr = btn.textContent
-        if (wrongGuesses.includes(ltr)) {
-            btn.className = "wrong";
-        } else if (guess.includes(ltr)) {
-            btn.className = "correct";
-        } else {
-            btn.className = "";
-        }
+        if (wrongGuesses.includes(ltr)) btn.className = "wrong";
+        else if (guess.includes(ltr)) btn.className = "correct";
+        else btn.className = "";
     })
     replayBtn.style.visibility = gameStatus ? 'visible' : 'hidden';
 }
